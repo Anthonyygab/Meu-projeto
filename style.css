@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Rajdhani', Arial, sans-serif;
+  background: #080b14;
+  color: #c8d6f0;
+  min-height: 100vh;
+}
+
+/* ===== LOGIN / REGISTER ===== */
+
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #080b14;
+}
+
+.container {
+  background: #0d1221;
+  border: 1px solid #1a2a4a;
+  border-radius: 12px;
+  padding: 36px 32px;
+  width: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00f5a0, #7b2ff7, #00c3ff);
+}
+
+h1 {
+  color: #e0e8ff;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.input-wrap {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.input-wrap i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #4affb4;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+input {
+  width: 100%;
+  padding: 11px 12px 11px 38px;
+  background: #111827;
+  border: 1px solid #1e3a5f;
+  border-radius: 6px;
+  color: #c8d6f0;
+  font-size: 15px;
+  font-family: 'Rajdhani', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: #4affb4;
+}
+
+input::placeholder {
+  color: #3a4a6a;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #00c896, #0070f3);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 6px;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+button:hover {
+  opacity: 0.88;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+#mensagem {
+  margin-top: 14px;
+  color: #f87171;
+  font-size: 14px;
+  text-align: center;
+  min-height: 20px;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.container p:last-child {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: #4a6a9a;
+}
+
+.container a {
+  color: #4affb4;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.container a:hover {
+  text-decoration: underline;
+}
+
+/* ===== DASHBOARD ===== */
+
+.dashboard {
+  padding: 28px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1a2a4a;
+  margin-bottom: 24px;
+}
+
+.topo h2 {
+  color: #e0e8ff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.topo p {
+  font-size: 12px;
+  color: #4a6a9a;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.topo button {
+  width: auto;
+  padding: 8px 20px;
+  background: transparent;
+  border: 1px solid #7b2ff7;
+  border-radius: 6px;
+  color: #b47cff;
+  font-size: 13px;
+  letter-spacing: 1px;
+  margin-top: 0;
+}
+
+.topo button:hover {
+  background: #1a0a2e;
+  opacity: 1;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: #0d1221;
+  border: 1px solid #1a2a4a;
+  border-radius: 10px;
+  padding: 22px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #2a3a6a;
+}
+
+.card:nth-child(1)::after { background: #4affb4; }
+.card:nth-child(2)::after { background: #7b2ff7; }
+.card:nth-child(3)::after { background: #00c3ff; }
+
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.card h3 {
+  font-size: 13px;
+  color: #4a6a9a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: 'Share Tech Mono', monospace;
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+.card p {
+  font-size: 16px;
+  color: #c8d6f0;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.card button {
+  width: auto;
+  padding: 6px 16px;
+  background: transparent;
+  border: 1px solid #1e3a5f;
+  border-radius: 5px;
+  color: #4a6a9a;
+  font-size: 12px;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 1px;
+  margin-top: 0;
+  text-transform: none;
+}
+
+.card button:hover {
+  border-color: #4affb4;
+  color: #4affb4;
+  opacity: 1;
+}
+
+/* ===== LOADING BUTTON ===== */
+
+button.loading {
+  opacity: 0.7;
+  pointer-events: none;
+  position: relative;
+}
+
+button.loading::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}

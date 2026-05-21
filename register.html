@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-body">
+
+  <div class="container">
+    <h1>Cadastro</h1>
+
+    <div class="input-wrap">
+      <i class="ti ti-user"></i>
+      <input type="text" id="usuario" placeholder="Usuário">
+    </div>
+    <div class="input-wrap">
+      <i class="ti ti-lock"></i>
+      <input type="password" id="senha" placeholder="Senha">
+    </div>
+    <div class="input-wrap">
+      <i class="ti ti-lock-check"></i>
+      <input type="password" id="confirmar" placeholder="Confirmar senha">
+    </div>
+
+    <button type="button" id="btnCadastrar" onclick="cadastrar()">Cadastrar</button>
+
+    <p id="mensagem"></p>
+
+    <p>Já tem conta? <a href="index.html">Login</a></p>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

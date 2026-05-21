@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="display: none;">
+
+  <div class="dashboard">
+
+    <div class="topo">
+      <div>
+        <h2 id="user">Carregando...</h2>
+        <p id="hora"></p>
+      </div>
+      <button onclick="logout()">Sair</button>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>📊 Dados do sistema</h3>
+        <p id="totalUsuarios">Carregando...</p>
+        <button onclick="carregarDados()">Atualizar</button>
+      </div>
+
+      <div class="card">
+        <h3>👤 Perfil</h3>
+        <p id="usuarioNome">Carregando...</p>
+      </div>
+
+      <div class="card">
+        <h3>⚙️ Status</h3>
+        <p style="color: #4affb4;">Sistema ativo</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
