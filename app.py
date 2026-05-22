@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["https://nome-aleatorio.netlify.app"])
+CORS(app, supports_credentials=True, origins=["https://shimmering-jelly-6748ef.netlify.app"], allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
 app.secret_key = os.environ.get("SECRET_KEY", "dev-local")  
 
 def conectar():
