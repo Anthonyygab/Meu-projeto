@@ -7,7 +7,16 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     usuario TEXT NOT NULL UNIQUE,
-    senha TEXT NOT NULL
+    senha TEXT NOT NULL,
+    data_cadastro TEXT
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS logins (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario TEXT NOT NULL,
+    data_hora TEXT NOT NULL
 )
 """)
 

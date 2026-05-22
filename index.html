@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cipher</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <link rel="stylesheet" href="style.css">
@@ -22,11 +23,11 @@
 
     <div class="input-wrap">
       <i class="ti ti-user"></i>
-      <input type="text" id="usuario" placeholder="Usuário">
+      <input type="text" id="usuario" placeholder="Usuário" autocomplete="username">
     </div>
     <div class="input-wrap">
       <i class="ti ti-lock"></i>
-      <input type="password" id="senha" placeholder="Senha">
+      <input type="password" id="senha" placeholder="Senha" autocomplete="current-password">
     </div>
 
     <button type="button" id="btnEntrar" onclick="entrar()">Entrar</button>

@@ -80,12 +80,19 @@ def login():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM usuarios WHERE usuario=?", (usuario,))
     user = cursor.fetchone()
-    conn.close()
 
     if user and check_password_hash(user[2], senha):
+        # registra login no histórico
+        cursor.execute(
+            "INSERT INTO logins (usuario, data_hora) VALUES (?, ?)",
+            (usuario, datetime.datetime.now().strftime("%d/%m/%Y %H:%M"))
+        )
+        conn.commit()
+        conn.close()
         token = gerar_token(usuario)
         return jsonify({"status": "ok", "token": token, "usuario": usuario})
     else:
+        conn.close()
         return jsonify({"status": "erro", "msg": "usuário ou senha incorretos"}), 401
 
 @app.route("/check")
@@ -107,13 +114,34 @@ def stats():
 
     conn = conectar()
     cursor = conn.cursor()
+
     cursor.execute("SELECT COUNT(*) FROM usuarios")
     total = cursor.fetchone()[0]
+
+    cursor.execute("SELECT usuario, data_cadastro FROM usuarios ORDER BY id DESC LIMIT 10")
+    usuarios = [{"usuario": r[0], "data": r[1] or "—"} for r in cursor.fetchall()]
+
+    cursor.execute("SELECT usuario, data_hora FROM logins ORDER BY id DESC LIMIT 10")
+    logins = [{"usuario": r[0], "hora": r[1]} for r in cursor.fetchall()]
+
+    # cadastros por dia da semana (últimos 7 dias)
+    cursor.execute("""
+        SELECT data_cadastro, COUNT(*) FROM usuarios
+        WHERE data_cadastro IS NOT NULL
+        GROUP BY data_cadastro
+        ORDER BY data_cadastro DESC
+        LIMIT 7
+    """)
+    grafico = [{"dia": r[0], "total": r[1]} for r in cursor.fetchall()]
+
     conn.close()
 
     return jsonify({
         "total_usuarios": total,
-        "usuario": usuario
+        "usuario": usuario,
+        "usuarios": usuarios,
+        "logins": logins,
+        "grafico": grafico
     })
 
 if __name__ == "__main__":
