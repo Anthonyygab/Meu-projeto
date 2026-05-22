@@ -12,7 +12,24 @@ app.secret_key = os.environ.get("SECRET_KEY", "dev-local")
 
 def conectar():
     return sqlite3.connect("usuarios.db")
+def migrar_banco():
+    conn = conectar()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("ALTER TABLE usuarios ADD COLUMN data_cadastro TEXT")
+    except:
+        pass
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS logins (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            usuario TEXT NOT NULL,
+            data_hora TEXT NOT NULL
+        )
+    """)
+    conn.commit()
+    conn.close()
 
+migrar_banco()
 def gerar_token(usuario):
     payload = {
         "usuario": usuario,
