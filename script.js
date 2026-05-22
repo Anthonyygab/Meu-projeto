@@ -1,5 +1,4 @@
-const API = "https://ciphernode.onrender.com/";
-
+const API = "https://ciphernode.onrender.com";
 // ========== UTILITÁRIOS ==========
 
 function setLoading(btnId, loading) {
