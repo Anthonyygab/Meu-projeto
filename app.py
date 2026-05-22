@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["https://shimmering-jelly-6748ef.netlify.app"], allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
+CORS(app, supports_credentials=True, origins=["https://ciphernodee.netlify.app"], allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
 app.secret_key = os.environ.get("SECRET_KEY", "dev-local")  
 app.config["SESSION_COOKIE_SAMESITE"] = "None"
 app.config["SESSION_COOKIE_SECURE"] = True
