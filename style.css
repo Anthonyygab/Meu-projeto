@@ -14,10 +14,6 @@
   z-index: 0;
   pointer-events: none;
 }
-.container {
-  position: relative;
-  z-index: 1;
-}
 body {
   font-family: 'Rajdhani', Arial, sans-serif;
   background: #080b14;
@@ -43,6 +39,7 @@ body {
   width: 300px;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 .container::before {
