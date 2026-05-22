@@ -1,4 +1,32 @@
 const API = "https://ciphernode.onrender.com";
+
+// ========== TOKEN ==========
+
+function salvarToken(token, usuario) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("usuario", usuario);
+}
+
+function getToken() {
+  return localStorage.getItem("token");
+}
+
+function getUsuario() {
+  return localStorage.getItem("usuario");
+}
+
+function limparToken() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("usuario");
+}
+
+function authHeaders() {
+  return {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${getToken()}`
+  };
+}
+
 // ========== UTILITÁRIOS ==========
 
 function setLoading(btnId, loading) {
@@ -37,13 +65,13 @@ async function entrar() {
     const resposta = await fetch(`${API}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({ usuario, senha })
     });
 
     const dados = await resposta.json();
 
     if (dados.status === "ok") {
+      salvarToken(dados.token, dados.usuario);
       window.location.href = "dashboard.html";
     } else {
       mostrarMensagem("Usuário ou senha incorretos ❌");
@@ -104,11 +132,20 @@ async function cadastrar() {
 // ========== DASHBOARD ==========
 
 async function verificar() {
+  const token = getToken();
+  if (!token) {
+    window.location.href = "index.html";
+    return;
+  }
+
   try {
-    const resposta = await fetch(`${API}/check`, { credentials: "include" });
+    const resposta = await fetch(`${API}/check`, {
+      headers: authHeaders()
+    });
     const dados = await resposta.json();
 
     if (!dados.logado) {
+      limparToken();
       window.location.href = "index.html";
       return;
     }
@@ -126,7 +163,9 @@ async function verificar() {
 
 async function carregarDados() {
   try {
-    const resposta = await fetch(`${API}/stats`, { credentials: "include" });
+    const resposta = await fetch(`${API}/stats`, {
+      headers: authHeaders()
+    });
     const dados = await resposta.json();
 
     document.getElementById("totalUsuarios").innerText =
@@ -141,7 +180,11 @@ async function carregarDados() {
 }
 
 async function logout() {
-  await fetch(`${API}/logout`, { method: "POST", credentials: "include" });
+  await fetch(`${API}/logout`, {
+    method: "POST",
+    headers: authHeaders()
+  });
+  limparToken();
   window.location.href = "index.html";
 }
 

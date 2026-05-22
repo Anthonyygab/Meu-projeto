@@ -1,17 +1,37 @@
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import jwt
+import datetime
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["https://ciphernodee.netlify.app"], allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
-app.secret_key = os.environ.get("SECRET_KEY", "dev-local")  
-app.config["SESSION_COOKIE_SAMESITE"] = "None"
-app.config["SESSION_COOKIE_SECURE"] = True
+CORS(app, supports_credentials=True, origins=["https://ciphernodee.netlify.app"], allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST", "OPTIONS"])
+app.secret_key = os.environ.get("SECRET_KEY", "dev-local")
 
 def conectar():
     return sqlite3.connect("usuarios.db")
+
+def gerar_token(usuario):
+    payload = {
+        "usuario": usuario,
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+    }
+    return jwt.encode(payload, app.secret_key, algorithm="HS256")
+
+def verificar_token(request):
+    auth = request.headers.get("Authorization", "")
+    if not auth.startswith("Bearer "):
+        return None
+    token = auth.split(" ")[1]
+    try:
+        payload = jwt.decode(token, app.secret_key, algorithms=["HS256"])
+        return payload["usuario"]
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.InvalidTokenError:
+        return None
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -38,7 +58,6 @@ def register():
         )
         conn.commit()
     except sqlite3.IntegrityError:
-        conn.close()
         return jsonify({"status": "erro", "msg": "usuário já existe"}), 409
     finally:
         conn.close()
@@ -64,26 +83,26 @@ def login():
     conn.close()
 
     if user and check_password_hash(user[2], senha):
-        session["logado"] = True
-        session["usuario"] = usuario
-        return jsonify({"status": "ok"})
+        token = gerar_token(usuario)
+        return jsonify({"status": "ok", "token": token, "usuario": usuario})
     else:
         return jsonify({"status": "erro", "msg": "usuário ou senha incorretos"}), 401
 
 @app.route("/check")
 def check():
-    if session.get("logado"):
-        return jsonify({"logado": True, "usuario": session.get("usuario")})
+    usuario = verificar_token(request)
+    if usuario:
+        return jsonify({"logado": True, "usuario": usuario})
     return jsonify({"logado": False})
 
 @app.route("/logout", methods=["POST"])
 def logout():
-    session.clear()
     return jsonify({"status": "ok"})
 
 @app.route("/stats")
 def stats():
-    if not session.get("logado"):
+    usuario = verificar_token(request)
+    if not usuario:
         return jsonify({"erro": "não autorizado"}), 401
 
     conn = conectar()
@@ -94,7 +113,7 @@ def stats():
 
     return jsonify({
         "total_usuarios": total,
-        "usuario": session.get("usuario")
+        "usuario": usuario
     })
 
 if __name__ == "__main__":
