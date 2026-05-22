@@ -287,3 +287,45 @@ button.loading::after {
 @keyframes spin {
   to { transform: translateY(-50%) rotate(360deg); }
 }
+.logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.logo-icon {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 20px;
+  color: #4affb4;
+  border: 2px solid #4affb4;
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-name {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 8px;
+  color: #e0e8ff;
+  text-transform: uppercase;
+}
+
+.logo-divider {
+  width: 160px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #4affb4, transparent);
+}
+
+.logo-sub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #4a6a9a;
+  text-transform: uppercase;
+}
